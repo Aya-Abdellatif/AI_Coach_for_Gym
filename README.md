@@ -1,1 +1,1 @@
-# AI_Coach_for_Gym
+# AI Coach for Gym
