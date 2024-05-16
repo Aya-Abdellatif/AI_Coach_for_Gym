@@ -84,9 +84,9 @@ def predict(img):
     result = model.predict(data)
 
     if float(result) >= CONFIDENCE_THERSHOLD: 
-      cv.putText(img, "True" , (50, 50), cv.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 255), 2)
+      cv.putText(img, "True" , (50, 50), cv.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2)
     else:
-      cv.putText(img, "False" , (50, 50), cv.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 255), 2)
+      cv.putText(img, "False" , (50, 50), cv.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255), 2)
 
 for i in range(11, 33):
     dfs([i])
