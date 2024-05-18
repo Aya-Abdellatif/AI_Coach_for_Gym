@@ -3,3 +3,4 @@ tensorflow
 scickit-learn
 numpy
 opencv-python
+matplotlib
