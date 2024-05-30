@@ -4,7 +4,7 @@ import mediapipe as mp
 import tensorflow as tf
 from sys import argv
 
-model = tf.keras.models.load_model('98.9583.h5')
+model = tf.keras.models.load_model('model/98.9583.h5')
 mp_pose = mp.solutions.pose
 pose = mp_pose.Pose(min_detection_confidence=0.5, min_tracking_confidence=0.5)
 
