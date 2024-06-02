@@ -1,7 +1,8 @@
-import streamlit as st
-from streamlit_webrtc import webrtc_streamer, VideoProcessorBase
-import av
-import numpy as np
+import cv2
+from flask import Flask, render_template, url_for, Response
+
+app = Flask(__name__)
+
 import cv2 as cv
 import numpy as np
 import mediapipe as mp
@@ -9,10 +10,12 @@ import tensorflow as tf
 from sys import argv
 
 model = tf.keras.models.load_model('model/98.9583.h5')
-st.success('Model Loaded')
 mp_pose = mp.solutions.pose
 pose = mp_pose.Pose(min_detection_confidence=0.5, min_tracking_confidence=0.5)
 
+
+
+cap = cv.VideoCapture(0 if len(argv) != 2 else argv[1])
 
 CONFIDENCE_THERSHOLD = 0.5
 
@@ -94,14 +97,20 @@ for i in range(11, 33):
     dfs([i])
 
 
+def capture():
+    vid = cv2.VideoCapture(0)
+    while True:
+        ret, frame = vid.read()
+        predict(frame)
+        _, image_binary = cv2.imencode('.jpg', frame)
+        image_binary = image_binary.tobytes()
+        data_frame = b'--frame\r\n'b'Content-Type: image/jpeg\r\n\r\n' + image_binary + b'\r\n\r\n'
+        yield data_frame
 
-class VideoProcessor(VideoProcessorBase):
-    def recv(self, frame: av.VideoFrame) -> av.VideoFrame:
-        # This method receives the frames from the video stream
-        img = frame.to_ndarray(format="bgr24")
-        #predict(img)
-        return av.VideoFrame.from_ndarray(img, format="bgr24")
+@app.route('/')
+def index():
+    return render_template('index.html')
 
-st.title("Real-time Video Capture with Streamlit")
-
-webrtc_streamer(key="example", video_processor_factory=VideoProcessor)
+@app.route('/live')
+def live():
+    return Response(capture(), mimetype='multipart/x-mixed-replace; boundary=frame')
