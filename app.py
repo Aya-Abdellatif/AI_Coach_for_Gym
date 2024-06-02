@@ -99,7 +99,7 @@ class VideoProcessor(VideoProcessorBase):
     def recv(self, frame: av.VideoFrame) -> av.VideoFrame:
         # This method receives the frames from the video stream
         img = frame.to_ndarray(format="bgr24")
-        predict(img)
+        #predict(img)
         return av.VideoFrame.from_ndarray(img, format="bgr24")
 
 st.title("Real-time Video Capture with Streamlit")
