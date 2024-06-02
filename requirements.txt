@@ -1,6 +1,6 @@
 mediapipe
 tensorflow
 numpy
-opencv-python==4.8.1.78
+opencv-python-headless
 streamlit
 streamlit-webrtc
