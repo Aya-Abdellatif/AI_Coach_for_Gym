@@ -4,3 +4,5 @@ scickit-learn
 numpy
 opencv-python
 matplotlib
+streamlit
+streamlit-webrtc
